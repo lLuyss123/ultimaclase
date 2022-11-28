@@ -39,6 +39,13 @@ export const Formulario = () => {
         setModoEdicion(true)
     }
 
+    const cancelar = () =>{
+        setModoEdicion(false)
+        setFruta("")
+        setDescripcion("")
+        setId("")
+    }
+
 
     const guardarFrutas = async (e) =>{
         e.preventDefault()
@@ -97,7 +104,7 @@ return (
                             <>
 <button className='btn btn-warning btn-block' on='submit'>Editar</button>
 
-<button className='btn btn-dark btn-block mx-2'>Cancelar</button>
+<button className='btn btn-dark btn-block mx-2'onClick={()=>cancelar()}>Cancelar</button>
 
 
 
