@@ -86,12 +86,32 @@ return (
             </ul>
             </div>
             <div className="col-4">
-                <h4 className="text-center">Agergar frutas</h4>
+                <h4 className="text-center">{modoEdicion ? "Editar Frutas" : "Agregar Frutas"}</h4>
                 <form onSubmit={guardarFrutas}>
                     <input type="text" className='form-control mb-2' value={fruta} onChange={(e)=>setFruta(e.target.value)} placeholder='Ingrese fruta' />
                     <input type="text" className='form-control mb-2' value={descripcion} onChange={(e)=>setDescripcion(e.target.value)} placeholder='Ingrese descripcion' />
-                    <button className='btn btn-primary btn-block' on='submit'>Agregar</button>
-                    <button className='btn btn-dark btn-block mx-2'>Cancelar</button>
+                    
+                    {
+                        modoEdicion ?
+                        (
+                            <>
+<button className='btn btn-warning btn-block' on='submit'>Editar</button>
+
+<button className='btn btn-dark btn-block mx-2'>Cancelar</button>
+
+
+
+                            </>
+
+                            
+                        )
+                        :
+                        <button className='btn btn-primary btn-block' on='submit'>Agregar</button>
+                    }
+
+                    
+
+                    
                 </form>
             </div>
         </div>
