@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {db} from '../firebase'
-import { collection, doc, addDoc, onSnapshot, query , deleteDoc} from 'firebase/firestore'
-import { async } from '@firebase/util'
+import { collection, doc, addDoc, onSnapshot, updateDoc , deleteDoc} from 'firebase/firestore'
 
 export const Formulario = () => {
     const [fruta,setFruta] = useState('')
@@ -37,6 +36,29 @@ export const Formulario = () => {
         setDescripcion(item.nombreDescripcion)
         setId(item.id)
         setModoEdicion(true)
+    }
+
+    const editarFrutas = async e =>{
+        e.preventDefault()
+        try {
+            const docRef = doc(db,"frutas",id)
+            await updateDoc(docRef,{
+                nombreFruta:fruta,
+                nombreDescripcion:descripcion
+            })
+
+            const nuevoArray = listaFrutas.map(
+                item => item.id === id ? { id:id, nombreFruta:fruta, nombreDescripcion:descripcion}: item
+            )
+            setListaFrutas(nuevoArray)
+            setFruta("")
+            setDescripcion("")
+            setId("")
+            setModoEdicion(false)
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const cancelar = () =>{
@@ -94,7 +116,7 @@ return (
             </div>
             <div className="col-4">
                 <h4 className="text-center">{modoEdicion ? "Editar Frutas" : "Agregar Frutas"}</h4>
-                <form onSubmit={guardarFrutas}>
+                <form onSubmit={modoEdicion ? editarFrutas: guardarFrutas}>
                     <input type="text" className='form-control mb-2' value={fruta} onChange={(e)=>setFruta(e.target.value)} placeholder='Ingrese fruta' />
                     <input type="text" className='form-control mb-2' value={descripcion} onChange={(e)=>setDescripcion(e.target.value)} placeholder='Ingrese descripcion' />
                     
