@@ -3,6 +3,7 @@ import {db} from '../firebase'
 import { collection, doc, addDoc, onSnapshot, updateDoc , deleteDoc} from 'firebase/firestore'
 
 export const Formulario = () => {
+    const img = 'https://api.lorem.space/image/movie?w=150&h=220';
     const [fruta,setFruta] = useState('')
     const [descripcion,setDescripcion] = useState('')
     const [id,setId] = useState(0)
@@ -97,13 +98,21 @@ return (
         <hr />
         <div className="row">
             <div className="col-8">
-            <h4 className="text-center">Listado de Frutas
+            <h4 className="text-center">Listado de Peliculas
             </h4>
             <ul className="list-group">
                 {
                     listaFrutas.map(item =>(
                         <li className='list-group-item' key={item.id}>
-                            <span className="lead">{item.nombreFruta} - {item.nombreDescripcion}</span>
+                            <span className="lead">
+                            <img src={img} alt="Esto es una imagen ramdon" class="img-thumbnail" width='60px'/> 
+                            - 
+                            {item.nombreFruta} 
+                            -
+                            {item.nombreDescripcion} 
+                            
+                            
+                            </span>
                             <button className='btn btn-danger btn-sm fload-end mx-2' onClick={()=>eliminar(item.id)}>Eliminar</button>
                             <button className='btn btn-warning btn-sm fload-end' onClick={()=>editar(item)}>Editar</button>
 
@@ -115,9 +124,9 @@ return (
             </ul>
             </div>
             <div className="col-4">
-                <h4 className="text-center">{modoEdicion ? "Editar Frutas" : "Agregar Frutas"}</h4>
+                <h4 className="text-center">{modoEdicion ? "Editar Peliculas" : "Agregar Peliculas"}</h4>
                 <form onSubmit={modoEdicion ? editarFrutas: guardarFrutas}>
-                    <input type="text" className='form-control mb-2' value={fruta} onChange={(e)=>setFruta(e.target.value)} placeholder='Ingrese fruta' />
+                    <input type="text" className='form-control mb-2' value={fruta} onChange={(e)=>setFruta(e.target.value)} placeholder='Ingrese Pelicula' />
                     <input type="text" className='form-control mb-2' value={descripcion} onChange={(e)=>setDescripcion(e.target.value)} placeholder='Ingrese descripcion' />
                     
                     {
